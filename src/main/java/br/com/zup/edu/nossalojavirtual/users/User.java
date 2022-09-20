@@ -48,7 +48,8 @@ public class User {
      * @deprecated frameworks eyes only
      */
     @Deprecated
-    private User() { }
+    private User() {
+    }
 
     public Long getId() {
         return id;
@@ -80,6 +81,7 @@ public class User {
         return new StringJoiner(", ", User.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
                 .add("email='" + email + "'")
+                .add("password='" + password)
                 .add("createdAt=" + createdAt)
                 .toString();
     }

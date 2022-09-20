@@ -15,12 +15,20 @@ class ProductOpinionResponse {
      * @deprecated framework eyes only
      */
     @Deprecated
-    private ProductOpinionResponse() { }
+    private ProductOpinionResponse() {
+    }
 
     private ProductOpinionResponse(ProductOpinion opinion) {
         this.title = opinion.getTitle();
         this.description = opinion.getDescription();
         this.rating = opinion.getRating();
+    }
+
+    public static List<ProductOpinionResponse> from(List<ProductOpinion> opinions) {
+
+        return opinions.stream()
+                .map(ProductOpinionResponse::new)
+                .collect(toList());
     }
 
     public String getTitle() {
@@ -33,12 +41,5 @@ class ProductOpinionResponse {
 
     public Integer getRating() {
         return rating;
-    }
-
-    public static List<ProductOpinionResponse> from(List<ProductOpinion> opinions) {
-
-        return opinions.stream()
-                       .map(ProductOpinionResponse::new)
-                       .collect(toList());
     }
 }

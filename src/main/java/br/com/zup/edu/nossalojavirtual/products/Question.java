@@ -45,7 +45,8 @@ class Question {
      * @deprecated frameworks eyes only
      */
     @Deprecated
-    private Question(){ }
+    private Question() {
+    }
 
 
     Question(@NotBlank String title,

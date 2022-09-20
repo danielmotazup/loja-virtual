@@ -20,7 +20,8 @@ interface SellersRankingClient {
          * @deprecated frameworks eyes only
          */
         @Deprecated
-        SellersRankingRequest() { }
+        SellersRankingRequest() {
+        }
 
         public SellersRankingRequest(Long purchaseId, String sellerId) {
             this.purchaseId = purchaseId;

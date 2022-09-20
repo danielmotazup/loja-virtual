@@ -18,7 +18,7 @@ class SendPurchaseFailEmail implements PostPurchaseAction {
      * do the action if payment was not confirmed
      *
      * @param postPaymentPurchase an unsuccessful post payment purchase
-     * @param uriBuilder build uri component
+     * @param uriBuilder          build uri component
      */
     @Override
     public void execute(PostPaymentProcessedPurchase postPaymentPurchase, UriComponentsBuilder uriBuilder) {
@@ -27,8 +27,8 @@ class SendPurchaseFailEmail implements PostPurchaseAction {
         }
 
         var retryPaymentUrl = uriBuilder.path("/api/purchases/{id}")
-                                        .buildAndExpand(postPaymentPurchase.getId())
-                                        .toString();
+                .buildAndExpand(postPaymentPurchase.getId())
+                .toString();
 
         String body = "An error occurred when processing your payment, try again in this link: " + postPaymentPurchase.paymentUrl(retryPaymentUrl);
         Email email = Email.to(postPaymentPurchase.buyerEmail())

@@ -52,16 +52,16 @@ public class Email {
     private LocalDateTime sentAt = now();
 
     /**
-     * @param to the email receiver
-     * @param from the emails sender
+     * @param to      the email receiver
+     * @param from    the emails sender
      * @param subject the emails subject
-     * @param body the emails body
+     * @param body    the emails body
      */
     private Email(String to,
-                 String from,
-                 String subject,
-                 String body,
-                 Product product) {
+                  String from,
+                  String subject,
+                  String body,
+                  Product product) {
 
 
         this.to = to;
@@ -75,7 +75,16 @@ public class Email {
      * @deprecated frameworks eyes only
      */
     @Deprecated
-    private Email() { }
+    private Email() {
+    }
+
+    /**
+     * @param to the emails receiver
+     * @return an {@link EmailTo} builder chain
+     */
+    public static EmailTo to(@javax.validation.constraints.Email String to) {
+        return new EmailTo(to);
+    }
 
     public String getTo() {
         return to;
@@ -91,15 +100,6 @@ public class Email {
 
     public String getBody() {
         return body;
-    }
-
-    /**
-     *
-     * @param to the emails receiver
-     * @return an {@link EmailTo} builder chain
-     */
-    public static EmailTo to(@javax.validation.constraints.Email String to) {
-        return new EmailTo(to);
     }
 
     public static class EmailTo {

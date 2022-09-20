@@ -23,7 +23,7 @@ class NewOpinionRequest {
     @Length(max = 500)
     private String description;
 
-   @NotNull
+    @NotNull
     private UUID productId;
 
     public Integer getRating() {
@@ -42,9 +42,16 @@ class NewOpinionRequest {
         return productId;
     }
 
+    public NewOpinionRequest(Integer rating, String title, String description, UUID productId) {
+        this.rating = rating;
+        this.title = title;
+        this.description = description;
+        this.productId = productId;
+    }
+
     public ProductOpinion toProductOpinion(Function<UUID, Optional<Product>> findProductById, User user) {
         var product = findProductById.apply(productId)
-                                     .orElseThrow(() -> new IllegalStateException(format("Product %s is not registered", productId)));
+                .orElseThrow(() -> new IllegalStateException(format("Product %s is not registered", productId)));
 
         return new ProductOpinion(rating, title, description, product, user);
 

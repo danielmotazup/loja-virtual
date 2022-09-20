@@ -21,7 +21,7 @@ class SendPurchaseEmailConfirmation implements PostPurchaseAction {
      * do the action if purchase is confirmed
      *
      * @param postPaymentPurchase a success post payment purchase
-     * @param uriBuilder build uri component
+     * @param uriBuilder          build uri component
      */
     //TODO: Apply i18n in messages
     @Override
@@ -34,7 +34,7 @@ class SendPurchaseEmailConfirmation implements PostPurchaseAction {
         Product product = postPaymentPurchase.getProduct();
 
         String body = "Your " + postPaymentPurchase.getQuantity() + " product(s): " + product.getName() +
-                      " is being prepared! Your purchase was confirmed at " + dateFormat.format(postPaymentPurchase.paymentConfirmedTime());
+                " is being prepared! Your purchase was confirmed at " + dateFormat.format(postPaymentPurchase.paymentConfirmedTime());
 
         Email email = Email.to(postPaymentPurchase.buyerEmail())
                 .from(postPaymentPurchase.sellerEmail())

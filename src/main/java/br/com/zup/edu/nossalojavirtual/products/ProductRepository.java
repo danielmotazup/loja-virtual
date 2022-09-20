@@ -16,4 +16,12 @@ public interface ProductRepository extends Repository<Product, UUID> {
     Optional<Product> findById(UUID uuid);
 
     List<Product> findByUser(User user);
+
+    void deleteProductByName(String string);
+
+    void deleteAll();
+
+
+
+    List<Product> findAll();
 }

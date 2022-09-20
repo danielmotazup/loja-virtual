@@ -34,12 +34,13 @@ public class Category {
      * @deprecated frameworks eyes only
      */
     @Deprecated
-    private Category() { }
+    private Category() {
+    }
 
     /**
      * if this category does not have a super category @see #Category(String name)
      *
-     * @param name the category name
+     * @param name          the category name
      * @param superCategory the category super category
      */
     public Category(@NotEmpty String name, @NotNull Category superCategory) {
@@ -70,7 +71,6 @@ public class Category {
     }
 
     /**
-     *
      * @return a list of Categories from mother to this category itself
      */
     public List<Category> getCategoryHierarchy() {

@@ -20,13 +20,12 @@ class PreProduct {
     private final String description;
 
     /**
-     *
-     * @param user who is creating the product
-     * @param category which products belongs to
-     * @param name products name
-     * @param price products price
+     * @param user          who is creating the product
+     * @param category      which products belongs to
+     * @param name          products name
+     * @param price         products price
      * @param stockQuantity product stock quantity
-     * @param description product description
+     * @param description   product description
      */
     public PreProduct(User user,
                       Category category,

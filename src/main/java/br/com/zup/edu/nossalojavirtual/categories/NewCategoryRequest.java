@@ -22,7 +22,8 @@ class NewCategoryRequest {
      * @deprecated frameworks eyes only
      */
     @Deprecated
-    NewCategoryRequest() { }
+    NewCategoryRequest() {
+    }
 
     NewCategoryRequest(@NotEmpty String name,
                        @Min(value = 1) Long superCategory) {
@@ -41,8 +42,8 @@ class NewCategoryRequest {
 
     Category toCategory(Function<Long, Optional<Category>> findCategoryById) {
         if (!isNull(superCategory)) {
-            var category  = findCategoryById.apply(superCategory)
-                                            .orElseThrow(() -> new IllegalStateException(format("The category %s informed does not exists", superCategory)));
+            var category = findCategoryById.apply(superCategory)
+                    .orElseThrow(() -> new IllegalStateException(format("The category %s informed does not exists", superCategory)));
 
             return new Category(name, category);
         }

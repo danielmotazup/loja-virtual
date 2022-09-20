@@ -26,11 +26,11 @@ class SendQuestionToSellersEmailListener {
         var body = questionEvent.getTitle() + " in " + questionEvent.getProductUri();
 
         Email email = Email.to(questionEvent.getSellersEmail())
-                           .from(questionEvent.getPossibleBuyer())
-                           .subject(subject)
-                           .body(body)
-                           .product(questionEvent.getProduct())
-                           .build();
+                .from(questionEvent.getPossibleBuyer())
+                .subject(subject)
+                .body(body)
+                .product(questionEvent.getProduct())
+                .build();
 
         sendEmail.send(email);
         emailRepository.save(email);

@@ -20,8 +20,7 @@ class LocalPhotoUploader implements PhotoUploader {
     private static final String PRODUCTS_BUCKET_URL = "https://s3.nosso-mercado-livre.amazon/products/%s/%s/%s";
 
     /**
-     *
-     * @param photos photos in base64 to upload
+     * @param photos     photos in base64 to upload
      * @param preProduct a previous state of a product
      * @return a list of {@link Photo} with images url
      */
@@ -29,14 +28,13 @@ class LocalPhotoUploader implements PhotoUploader {
     public List<Photo> upload(List<String> photos, PreProduct preProduct) {
 
         return photos.stream()
-                     .map(photo -> storagePhoto(photo, preProduct))
-                     .collect(toList());
+                .map(photo -> storagePhoto(photo, preProduct))
+                .collect(toList());
 
     }
 
     /**
-     *
-     * @param photo photo in base64
+     * @param photo      photo in base64
      * @param preProduct a previous state of a product whose photos belong
      * @return a {@link Photo} with its url
      */

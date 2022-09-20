@@ -15,11 +15,18 @@ class CharacteristicResponse {
      * @deprecated framework eyes only
      */
     @Deprecated
-    private CharacteristicResponse() { }
+    private CharacteristicResponse() {
+    }
 
     private CharacteristicResponse(Characteristic characteristic) {
         this.name = characteristic.getName();
         this.description = characteristic.getDescription();
+    }
+
+    public static List<CharacteristicResponse> from(Set<Characteristic> characteristics) {
+        return characteristics.stream()
+                .map(CharacteristicResponse::new)
+                .collect(toList());
     }
 
     public String getName() {
@@ -28,11 +35,5 @@ class CharacteristicResponse {
 
     public String getDescription() {
         return description;
-    }
-
-    public static List<CharacteristicResponse> from(Set<Characteristic> characteristics) {
-        return characteristics.stream()
-                              .map(CharacteristicResponse::new)
-                              .collect(toList());
     }
 }

@@ -14,7 +14,7 @@ class QuestionResponse {
     private String title;
 
     private String user;
-    
+
     private LocalDateTime createdAt;
 
     private QuestionResponse(Question question) {
@@ -24,6 +24,13 @@ class QuestionResponse {
         this.title = question.getTitle();
         this.user = user.getUsername();
         this.createdAt = question.getCreatedAt();
+    }
+
+    public static List<QuestionResponse> from(List<Question> questions) {
+
+        return questions.stream()
+                .map(QuestionResponse::new)
+                .collect(toList());
     }
 
     public Long getId() {
@@ -40,12 +47,5 @@ class QuestionResponse {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public static List<QuestionResponse> from(List<Question> questions) {
-
-        return questions.stream()
-                        .map(QuestionResponse::new)
-                        .collect(toList());
     }
 }

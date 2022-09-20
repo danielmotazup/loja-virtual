@@ -18,8 +18,7 @@ class QuestionEvent {
     private final Product product;
 
     /**
-     *
-     * @param question that was created to a specific product
+     * @param question   that was created to a specific product
      * @param uriBuilder the url creator
      */
     public QuestionEvent(Question question, UriComponentsBuilder uriBuilder) {
@@ -33,8 +32,8 @@ class QuestionEvent {
         this.possibleBuyer = user.getUsername();
 
         this.productUri = uriBuilder.path("/api/products/{id}")
-                                    .buildAndExpand(product.getId())
-                                    .toString();
+                .buildAndExpand(product.getId())
+                .toString();
         this.product = product;
     }
 

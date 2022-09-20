@@ -3,8 +3,8 @@ package br.com.zup.edu.nossalojavirtual.purchase;
 import javax.persistence.Embeddable;
 import java.time.LocalDateTime;
 
-import static java.time.LocalDateTime.now;
 import static br.com.zup.edu.nossalojavirtual.purchase.Payment.PaymentStatus.SUCCESS;
+import static java.time.LocalDateTime.now;
 
 @Embeddable
 class Payment {
@@ -17,7 +17,8 @@ class Payment {
      * @deprecated hibernate eyes only
      */
     @Deprecated
-    private Payment() { }
+    private Payment() {
+    }
 
     public Payment(String paymentId, PaymentStatus status) {
         this.paymentId = paymentId;

@@ -50,8 +50,8 @@ class PurchaseController {
         purchaseRepository.save(purchase);
 
         var redirectUrl = uriBuilder.path("/api/purchases/confirm-payment")
-                                    .buildAndExpand(purchase.getId())
-                                    .toString();
+                .buildAndExpand(purchase.getId())
+                .toString();
 
         String paymentUrl = purchase.paymentUrl(redirectUrl);
 
@@ -62,7 +62,7 @@ class PurchaseController {
         return ok(response);
     }
 
-    @InitBinder(value = { "newPurchaseRequest" })
+    @InitBinder(value = {"newPurchaseRequest"})
     void initBinder(WebDataBinder binder) {
 
         binder.addValidators(

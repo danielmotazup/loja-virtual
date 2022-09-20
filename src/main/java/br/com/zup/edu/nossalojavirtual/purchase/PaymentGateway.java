@@ -11,7 +11,6 @@ import static org.springframework.util.Assert.notNull;
 enum PaymentGateway {
 
     PAYPAL {
-
         @Override
         String paymentUrl(@NotNull Purchase purchase, @URL String redirectUrl) {
             notNull(purchase, "purchase must not be null");

@@ -41,7 +41,7 @@ class PaymentGatewayReturnController {
         return ok().build();
     }
 
-    @InitBinder(value = { "paymentReturn" })
+    @InitBinder(value = {"paymentReturn"})
     void initBinder(WebDataBinder binder) {
         binder.addValidators(
                 new ObjectIsRegisteredValidator<>("purchaseId",

@@ -18,7 +18,8 @@ class NewUserRequest {
      * @deprecated frameworks eyes only
      */
     @Deprecated
-    NewUserRequest() { }
+    NewUserRequest() {
+    }
 
     NewUserRequest(@Email @NotEmpty String login,
                    @Size(min = 6) String password) {

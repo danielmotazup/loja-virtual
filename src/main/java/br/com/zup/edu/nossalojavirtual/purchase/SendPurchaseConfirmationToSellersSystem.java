@@ -17,7 +17,7 @@ class SendPurchaseConfirmationToSellersSystem implements PostPurchaseAction {
      * do the action if purchase is confirmed
      *
      * @param postPaymentPurchase a success post payment purchase
-     * @param uriBuilder build uri component
+     * @param uriBuilder          build uri component
      */
     @Override
     public void execute(PostPaymentProcessedPurchase postPaymentPurchase, UriComponentsBuilder uriBuilder) {

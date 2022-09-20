@@ -11,7 +11,7 @@ import static br.com.zup.edu.nossalojavirtual.purchase.Payment.PaymentStatus.SUC
 
 /**
  * Specify the return of a payment gateway
- *
+ * <p>
  * if the field names are different, maybe the annotation {@link com.fasterxml.jackson.annotation.JsonAlias} help
  */
 class PaymentReturn {

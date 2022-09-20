@@ -40,10 +40,11 @@ class ProductOpinion {
     private User user;
 
     /**
-     * @deprecated  framework eyes only
+     * @deprecated framework eyes only
      */
     @Deprecated
-    private ProductOpinion() { }
+    private ProductOpinion() {
+    }
 
     ProductOpinion(@Range(min = 1, max = 5) Integer rating,
                    @NotBlank String title,

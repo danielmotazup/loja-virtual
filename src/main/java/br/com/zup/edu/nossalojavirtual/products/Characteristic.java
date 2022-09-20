@@ -16,7 +16,8 @@ class Characteristic {
     @NotBlank
     private String description;
 
-    private Characteristic() { }
+    private Characteristic() {
+    }
 
     Characteristic(@NotBlank String name,
                    @NotBlank String description) {

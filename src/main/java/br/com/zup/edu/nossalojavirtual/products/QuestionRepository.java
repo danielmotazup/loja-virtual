@@ -12,4 +12,8 @@ interface QuestionRepository extends Repository<Question, Long> {
     List<Question> findByProduct(Product product);
 
     Optional<Question> findById(Long id);
+
+    void deleteAll();
+
+    List<Question> findAll();
 }

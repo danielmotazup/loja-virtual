@@ -14,7 +14,8 @@ class Photo {
     @NotBlank
     private String url;
 
-    private Photo() { }
+    private Photo() {
+    }
 
     /**
      * @param url where photo is stored

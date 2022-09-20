@@ -19,11 +19,10 @@ import static org.springframework.util.Assert.notEmpty;
 
 @Table(name = "products")
 @Entity
-public
-class Product {
+public class Product {
 
     @Id
-    @Column(name = "product_id")
+    @Column(name = "product_id", columnDefinition = "binary(16)")
     private UUID id;
 
     @NotBlank
@@ -71,16 +70,22 @@ class Product {
     @OneToMany(mappedBy = "product")
     private List<Question> questions;
 
-    @Version
+
     @Column(name = "product_created_at")
     private LocalDateTime createdAt = now();
+
+    @Version
+    private Long version;
 
 
     /**
      * @deprecated frameworks eyes only
      */
     @Deprecated
-    private Product() { }
+    private Product() {
+    }
+
+
 
     Product(@NotNull PreProduct preProduct,
             @Size(min = 1) List<Photo> photos,
@@ -145,11 +150,14 @@ class Product {
     }
 
     /**
-     *
      * @return a list of categories from category mother to product's category
      */
     public List<Category> getCategoriesHierarchy() {
         return category.getCategoryHierarchy();
+    }
+
+    public Long getVersion() {
+        return version;
     }
 
     public String sellerEmail() {
@@ -196,8 +204,7 @@ class Product {
      * changes the product {@link #stockQuantity}
      *
      * @param newPurchase a new Purchase (this parameter is highly coupled, but if needed an interface can be created to decouple)
-     * @param buyer a buyer
-     *
+     * @param buyer       a buyer
      * @return An {@link Optional< Purchase >} with a new {@link Purchase} if stock quantity is valid
      */
     public Optional<Purchase> reserveQuantityFor(NewPurchaseRequest newPurchase, User buyer) {

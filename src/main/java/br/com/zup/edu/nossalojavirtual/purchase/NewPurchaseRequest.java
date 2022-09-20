@@ -1,7 +1,7 @@
 package br.com.zup.edu.nossalojavirtual.purchase;
 
-import br.com.zup.edu.nossalojavirtual.users.User;
 import br.com.zup.edu.nossalojavirtual.products.Product;
+import br.com.zup.edu.nossalojavirtual.users.User;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

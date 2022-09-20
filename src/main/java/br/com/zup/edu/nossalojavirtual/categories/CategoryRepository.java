@@ -13,4 +13,6 @@ public interface CategoryRepository extends Repository<Category, Long> {
     boolean existsByName(String name);
 
     boolean existsById(Long id);
+
+    void deleteAll();
 }

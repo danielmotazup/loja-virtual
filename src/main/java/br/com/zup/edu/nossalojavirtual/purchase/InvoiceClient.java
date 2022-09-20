@@ -20,7 +20,8 @@ interface InvoiceClient {
          * @deprecated frameworks eyes only
          */
         @Deprecated
-        InvoiceRequest() { }
+        InvoiceRequest() {
+        }
 
         public InvoiceRequest(Long purchaseId, String buyerId) {
             this.purchaseId = purchaseId;

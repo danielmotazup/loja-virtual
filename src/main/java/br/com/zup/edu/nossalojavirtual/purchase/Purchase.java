@@ -60,7 +60,8 @@ class Purchase {
      * @deprecated hibernate eyes only
      */
     @Deprecated
-    private Purchase() { }
+    private Purchase() {
+    }
 
     Purchase(@NotNull User buyer,
              @NotNull Product product,
@@ -127,9 +128,9 @@ class Purchase {
         }
 
         Payment successPayment = paymentAttempts.stream()
-                                                .filter(Payment::isSuccessful)
-                                                .findFirst()
-                                                .get();
+                .filter(Payment::isSuccessful)
+                .findFirst()
+                .get();
 
         return successPayment.getReturnedAt();
     }

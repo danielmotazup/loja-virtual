@@ -30,7 +30,8 @@ class ProductDetailsResponse {
      * @deprecated framework eyes only
      */
     @Deprecated
-    private ProductDetailsResponse() { }
+    private ProductDetailsResponse() {
+    }
 
     ProductDetailsResponse(Product product, UriComponentsBuilder uriBuilder) {
         this.id = product.getId();
@@ -38,20 +39,20 @@ class ProductDetailsResponse {
         this.stockQuantity = product.getStockQuantity();
         this.description = product.getDescription();
         this.categoryHierarchy = product.getCategoriesHierarchy()
-                                        .stream()
-                                        .map(Category::getName)
-                                        .collect(toUnmodifiableList());
+                .stream()
+                .map(Category::getName)
+                .collect(toUnmodifiableList());
 
         this.sellersDetails = uriBuilder.path("/api/products/{email}")
-                                        .buildAndExpand(product.sellerEmail())
-                                        .toString();
+                .buildAndExpand(product.sellerEmail())
+                .toString();
 
         this.characteristics = CharacteristicResponse.from(product.getCharacteristics());
 
         this.photos = product.getPhotos()
-                             .stream()
-                             .map(Photo::getUrl)
-                             .collect(toList());
+                .stream()
+                .map(Photo::getUrl)
+                .collect(toList());
 
         this.sellerOtherProducts = makeSellerOtherProductResponse(product.sellerOtherProducts());
         this.rating = product.rating();
@@ -64,8 +65,8 @@ class ProductDetailsResponse {
 
     private List<SimpleProductDetailsResponse> makeSellerOtherProductResponse(Set<Product> sellerOtherProducts) {
         return sellerOtherProducts.stream()
-                                  .map(SimpleProductDetailsResponse::new)
-                                  .collect(toUnmodifiableList());
+                .map(SimpleProductDetailsResponse::new)
+                .collect(toUnmodifiableList());
     }
 
     private List<Question> sortQuestionByNewest(List<Question> questions) {
@@ -136,7 +137,8 @@ class ProductDetailsResponse {
          * @deprecated framework eyes only
          */
         @Deprecated
-        private SimpleProductDetailsResponse() { }
+        private SimpleProductDetailsResponse() {
+        }
 
         private SimpleProductDetailsResponse(Product product) {
             this.id = product.getId();

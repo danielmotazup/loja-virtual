@@ -31,14 +31,14 @@ class UserController {
         return created(location).build();
     }
 
-    @InitBinder(value = { "newUserRequest" })
+    @InitBinder(value = {"newUserRequest"})
     void initBinder(WebDataBinder binder) {
 
         binder.addValidators(
-                             new UniqueFieldValidator<NewUserRequest, String>("login",
-                                     "user.login.alreadyRegistered",
-                                     NewUserRequest.class,
-                                     userRepository::existsByEmail));
+                new UniqueFieldValidator<NewUserRequest, String>("login",
+                        "user.login.alreadyRegistered",
+                        NewUserRequest.class,
+                        userRepository::existsByEmail));
     }
 
 }

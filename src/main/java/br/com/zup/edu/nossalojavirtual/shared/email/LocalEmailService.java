@@ -12,6 +12,6 @@ class LocalEmailService implements EmailService {
     @Override
     public void send(Email email) {
 
-        LOG.info("[PRODUCT] [QUESTION] Sending email to {}, from: {}, subject: {}, body: {}", email.getTo(), email.getFrom(), email.getSubject() ,email.getBody());
+        LOG.info("[PRODUCT] [QUESTION] Sending email to {}, from: {}, subject: {}, body: {}", email.getTo(), email.getFrom(), email.getSubject(), email.getBody());
     }
 }
