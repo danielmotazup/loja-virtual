@@ -3,10 +3,15 @@ package br.com.zup.edu.nossalojavirtual.purchase;
 import br.com.zup.edu.nossalojavirtual.products.ProductRepository;
 import br.com.zup.edu.nossalojavirtual.shared.validators.ObjectIsRegisteredValidator;
 import br.com.zup.edu.nossalojavirtual.users.User;
+import br.com.zup.edu.nossalojavirtual.users.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
@@ -23,17 +28,23 @@ class PurchaseController {
     private final ProductRepository productRepository;
     private final PurchaseRepository purchaseRepository;
 
+    private final UserRepository userRepository;
+
     PurchaseController(ProductRepository productRepository,
-                       PurchaseRepository purchaseRepository) {
+                       PurchaseRepository purchaseRepository, UserRepository userRepository) {
         this.productRepository = productRepository;
         this.purchaseRepository = purchaseRepository;
+        this.userRepository = userRepository;
     }
 
     @PostMapping
     @Transactional
     public ResponseEntity<?> buy(@RequestBody @Valid NewPurchaseRequest newPurchase,
-                                 User buyer, // TODO: Injetar o usuário autenticado
+                                 @AuthenticationPrincipal Jwt jwt,
                                  UriComponentsBuilder uriBuilder) throws BindException {
+
+        User buyer = userRepository.findByEmail(jwt.getClaim("email")).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.UNAUTHORIZED, "usuario não autenticao"));
 
         var product = productRepository.findById(newPurchase.getProductId()).get();
 

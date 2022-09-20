@@ -34,4 +34,9 @@ public class NewPurchaseRequest {
         return new Purchase(buyer, product, quantity, paymentGateway);
     }
 
+    public NewPurchaseRequest(UUID productId, int quantity, PaymentGateway paymentGateway) {
+        this.productId = productId;
+        this.quantity = quantity;
+        this.paymentGateway = paymentGateway;
+    }
 }

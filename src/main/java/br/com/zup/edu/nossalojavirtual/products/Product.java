@@ -87,7 +87,7 @@ public class Product {
 
 
 
-    Product(@NotNull PreProduct preProduct,
+    public Product(@NotNull PreProduct preProduct,
             @Size(min = 1) List<Photo> photos,
             @Size(min = 3) Set<Characteristic> characteristics) {
 

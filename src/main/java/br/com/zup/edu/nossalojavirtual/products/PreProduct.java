@@ -9,7 +9,7 @@ import java.util.UUID;
 /**
  * A previous state of a product with its basic information
  */
-class PreProduct {
+public class PreProduct {
 
     private final UUID id;
     private final User user;

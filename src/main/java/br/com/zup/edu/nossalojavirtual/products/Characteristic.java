@@ -8,6 +8,7 @@ import java.util.StringJoiner;
 import static org.springframework.util.Assert.hasText;
 
 @Embeddable
+public
 class Characteristic {
 
 
@@ -19,7 +20,7 @@ class Characteristic {
     private Characteristic() {
     }
 
-    Characteristic(@NotBlank String name,
+    public Characteristic(@NotBlank String name,
                    @NotBlank String description) {
         hasText(name, "name must have some text");
         hasText(name, "description must be set");

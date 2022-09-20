@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 
 @SpringBootTest
@@ -62,8 +63,8 @@ class ProductControllerTest {
     @BeforeEach
     void setup() {
 
-        userRepository.deleteAll();
         productRepository.deleteAll();
+        userRepository.deleteAll();
         categoryRepository.deleteAll();
 
         user = new User("daniel.mota@email.com.br", Password.encode("123456"));
@@ -225,6 +226,41 @@ class ProductControllerTest {
 
 
     }
+
+
+    @DisplayName("deve cadastrar foto a produto que pertence ao proprio usuário")
+    @Test
+    void teste06() throws Exception {
+
+        NewProductRequest newProductRequest = new NewProductRequest("Toalha", new BigDecimal("15.00"), 5, photos,
+                characteristicList, "toalha macia", category.getId());
+
+
+        String payload = mapper.writeValueAsString(newProductRequest);
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/products")
+                .with(jwt().jwt(jwt -> {
+                    jwt.claim("email", user.getUsername());
+                }).authorities(new SimpleGrantedAuthority("SCOPE_products:write")))
+
+                .content(payload)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Accept-Language", "pt-br");
+
+
+        mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.redirectedUrlPattern("/api/products/*"));
+
+        List<Product> products = productRepository.findAll();
+
+
+        assertEquals(user.getUsername(), products.get(0).getUser().getUsername());
+
+
+    }
+
+
+
 
     private String gera1001Carecteres() {
         return "a".repeat(1001);

@@ -90,6 +90,7 @@ class UserControllerTest {
         ));
 
     }
+
     @DisplayName("não deve cadastrar um user com email invalido")
     @Test
     void teste03() throws Exception {

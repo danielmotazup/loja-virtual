@@ -8,19 +8,20 @@ import javax.validation.constraints.NotBlank;
 import static org.springframework.util.Assert.hasText;
 
 @Embeddable
+public
 class Photo {
 
     @URL
     @NotBlank
     private String url;
 
-    private Photo() {
+    public Photo() {
     }
 
     /**
      * @param url where photo is stored
      */
-    Photo(String url) {
+    public Photo(String url) {
         hasText(url, "Photo must have an url");
         this.url = url;
     }
