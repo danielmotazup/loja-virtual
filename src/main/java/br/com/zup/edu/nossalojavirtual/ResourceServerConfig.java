@@ -47,6 +47,9 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/purchase").hasAuthority("SCOPE_purchase:write")
                 .antMatchers(HttpMethod.GET, "/api/purchase").hasAuthority("SCOPE_purchase:read")
 
+                .antMatchers(HttpMethod.POST, "/api/purchases/confirm-payment").hasAuthority("SCOPE_purchase:write")
+                .antMatchers(HttpMethod.GET, "/api/purchases/confirm-payment").hasAuthority("SCOPE_purchase:read")
+
 
                 .anyRequest().authenticated()
                 .and()
