@@ -1,6 +1,8 @@
 package br.com.zup.edu.nossalojavirtual.users;
 
+import br.com.zup.edu.nossalojavirtual.categories.CategoryRepository;
 import br.com.zup.edu.nossalojavirtual.exception.MensagemDeErro;
+import br.com.zup.edu.nossalojavirtual.products.ProductRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -36,9 +38,19 @@ class UserControllerTest {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
+
+
 
     @BeforeEach
     void setup() {
+        productRepository.deleteAll();
+        categoryRepository.deleteAll();
+        userRepository.deleteAll();
         userRepository.deleteAll();
     }
 

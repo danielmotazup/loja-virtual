@@ -54,4 +54,10 @@ class PaymentReturn {
 
         return ERROR;
     }
+
+    public PaymentReturn(Long purchaseId, String paymentId, String status) {
+        this.purchaseId = purchaseId;
+        this.paymentId = paymentId;
+        this.status = status;
+    }
 }

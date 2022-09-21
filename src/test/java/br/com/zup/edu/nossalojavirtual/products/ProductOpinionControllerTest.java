@@ -66,6 +66,7 @@ class ProductOpinionControllerTest {
 
     @BeforeEach
     void setup() {
+        productOpinionRepository.deleteAll();
         productRepository.deleteAll();
         categoryRepository.deleteAll();
         userRepository.deleteAll();
