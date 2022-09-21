@@ -59,14 +59,57 @@ class UserControllerTest {
         mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.redirectedUrlPattern("/api/users/*"));
 
-        assertTrue(userRepository.existsByEmail("user@email.com"));
+        assertEquals(1,userRepository.findAll().size());
 
 
     }
 
-    @DisplayName("não deve cadastrar um user com dados incorretos")
+    @DisplayName("não deve cadastrar um usuario não autenticado")
     @Test
     void teste02() throws Exception {
+
+        NewUserRequest newUser = new NewUserRequest("user@email.com", "112233");
+        Password password = Password.encode(newUser.getPassword());
+        User user = new User(newUser.getLogin(), password);
+        userRepository.save(user);
+
+
+        NewUserRequest newUserRequest = new NewUserRequest("user@email.com", "987445");
+
+        String payload = mapper.writeValueAsString(newUserRequest);
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/users")
+                .content(payload).contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br");
+
+        mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isUnauthorized());
+
+    }
+
+    @DisplayName("não deve cadastrar um usuario nao autorizado")
+    @Test
+    void teste03() throws Exception {
+
+        NewUserRequest newUser = new NewUserRequest("user@email.com", "112233");
+        Password password = Password.encode(newUser.getPassword());
+        User user = new User(newUser.getLogin(), password);
+        userRepository.save(user);
+
+
+        NewUserRequest newUserRequest = new NewUserRequest("user@email.com", "987445");
+
+        String payload = mapper.writeValueAsString(newUserRequest);
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/users").with(
+                        jwt())
+                .content(payload).contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br");
+
+        mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isForbidden());
+
+    }
+
+    @DisplayName("não deve cadastrar um usuario com dados incorretos")
+    @Test
+    void teste04() throws Exception {
 
         NewUserRequest newUserRequest = new NewUserRequest(null, "12");
 
@@ -91,9 +134,9 @@ class UserControllerTest {
 
     }
 
-    @DisplayName("não deve cadastrar um user com email invalido")
+    @DisplayName("não deve cadastrar um usuario com email invalido")
     @Test
-    void teste03() throws Exception {
+    void teste05() throws Exception {
 
         NewUserRequest newUserRequest = new NewUserRequest("user", "123456");
 
@@ -117,9 +160,9 @@ class UserControllerTest {
 
     }
 
-    @DisplayName("não deve cadastrar um user com mesmo email")
+    @DisplayName("não deve cadastrar um usuario com mesmo email")
     @Test
-    void teste04() throws Exception {
+    void teste06() throws Exception {
 
         NewUserRequest newUser = new NewUserRequest("user@email.com", "112233");
         Password password = Password.encode(newUser.getPassword());
@@ -149,47 +192,6 @@ class UserControllerTest {
 
     }
 
-    @DisplayName("não deve cadastrar um user não autenticado")
-    @Test
-    void teste05() throws Exception {
 
-        NewUserRequest newUser = new NewUserRequest("user@email.com", "112233");
-        Password password = Password.encode(newUser.getPassword());
-        User user = new User(newUser.getLogin(), password);
-        userRepository.save(user);
-
-
-        NewUserRequest newUserRequest = new NewUserRequest("user@email.com", "987445");
-
-        String payload = mapper.writeValueAsString(newUserRequest);
-
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/users")
-                .content(payload).contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br");
-
-        mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isUnauthorized());
-
-    }
-
-    @DisplayName("não deve cadastrar um user nao autorizado")
-    @Test
-    void teste06() throws Exception {
-
-        NewUserRequest newUser = new NewUserRequest("user@email.com", "112233");
-        Password password = Password.encode(newUser.getPassword());
-        User user = new User(newUser.getLogin(), password);
-        userRepository.save(user);
-
-
-        NewUserRequest newUserRequest = new NewUserRequest("user@email.com", "987445");
-
-        String payload = mapper.writeValueAsString(newUserRequest);
-
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/users").with(
-                        jwt())
-                .content(payload).contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br");
-
-        mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isForbidden());
-
-    }
 
 }

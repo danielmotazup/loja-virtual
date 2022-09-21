@@ -106,7 +106,7 @@ class ProductOpinionControllerTest {
                     jwt.claim("email", user.getUsername());
                 }).authorities(new SimpleGrantedAuthority("SCOPE_products:write")))
                 .content(payload)
-                .contentType(MediaType.APPLICATION_JSON);
+                .contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br");
 
         mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.redirectedUrlPattern("/api/opinions/*"));
@@ -125,7 +125,7 @@ class ProductOpinionControllerTest {
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/opinions")
                 .content(payload)
-                .contentType(MediaType.APPLICATION_JSON);
+                .contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br");
 
         mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isUnauthorized());
 
@@ -143,7 +143,7 @@ class ProductOpinionControllerTest {
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/opinions")
                 .with(jwt())
                 .content(payload)
-                .contentType(MediaType.APPLICATION_JSON);
+                .contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br");
 
         mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isForbidden());
 
@@ -163,7 +163,7 @@ class ProductOpinionControllerTest {
                     jwt.claim("email", user.getUsername());
                 }).authorities(new SimpleGrantedAuthority("SCOPE_products:write")))
                 .content(payload)
-                .contentType(MediaType.APPLICATION_JSON);
+                .contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br");
 
         String contentAsString = mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
@@ -173,9 +173,9 @@ class ProductOpinionControllerTest {
 
         assertEquals(3, mensagemDeErro.getMensagens().size());
         MatcherAssert.assertThat(mensagemDeErro.getMensagens(), Matchers.containsInAnyOrder(
-                "O campo title must not be blank",
-                "O campo rating must be between 1 and 5",
-                "O campo description length must be between 0 and 500"
+                "O campo title não deve estar em branco",
+                "O campo rating deve estar entre 1 e 5",
+                "O campo description o comprimento deve ser entre 0 e 500"
         ));
 
 
@@ -195,7 +195,7 @@ class ProductOpinionControllerTest {
                     jwt.claim("email", user.getUsername());
                 }).authorities(new SimpleGrantedAuthority("SCOPE_products:write")))
                 .content(payload)
-                .contentType(MediaType.APPLICATION_JSON);
+                .contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br");
 
         String contentAsString = mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);

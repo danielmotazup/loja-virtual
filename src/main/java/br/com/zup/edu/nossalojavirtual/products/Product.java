@@ -247,4 +247,5 @@ public class Product {
                 .add("createdAt=" + createdAt)
                 .toString();
     }
+
 }

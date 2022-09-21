@@ -58,9 +58,8 @@ class CategoryControllerTest {
         mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.redirectedUrlPattern("/api/categories/*"));
 
-        assertTrue(categoryRepository.existsByName(newCategoryRequest.getName()));
+        assertEquals(1,categoryRepository.findAll().size());
     }
-
     @DisplayName("deve cadastrar uma nova categoria com supercategoria")
     @Test
     void teste02() throws Exception {
@@ -80,14 +79,47 @@ class CategoryControllerTest {
         mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.redirectedUrlPattern("/api/categories/*"));
 
-        assertTrue(categoryRepository.existsByName(newCategoryRequest.getName()));
+        assertEquals(2,categoryRepository.findAll().size());
+
+    }
+
+    @DisplayName("não deve cadastrar uma categoria sem autenticacao")
+    @Test
+    void teste03() throws Exception {
+
+        NewCategoryRequest newCategoryRequest = new NewCategoryRequest("Banho", null);
+
+        String payload = mapper.writeValueAsString(newCategoryRequest);
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/categories")
+                .content(payload).contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br");
+
+        mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isUnauthorized());
+
+    }
+
+    @DisplayName("não deve cadastrar uma categoria sem autorizacao")
+    @Test
+    void teste04() throws Exception {
+
+        NewCategoryRequest newCategoryRequest = new NewCategoryRequest("Banho", null);
+
+        String payload = mapper.writeValueAsString(newCategoryRequest);
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/categories")
+                .with(jwt())
+                .content(payload).contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br");
+
+        mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isForbidden());
 
     }
 
 
+
+
     @DisplayName("não deve cadastrar uma categoria sem nome")
     @Test
-    void teste03() throws Exception {
+    void teste05() throws Exception {
         NewCategoryRequest newCategoryRequest = new NewCategoryRequest(null, null);
 
         String payload = mapper.writeValueAsString(newCategoryRequest);
@@ -101,16 +133,17 @@ class CategoryControllerTest {
 
         MensagemDeErro mensagemDeErro = mapper.readValue(payloadResponse, MensagemDeErro.class);
 
-        assertEquals(1, mensagemDeErro.getMensagens().size());
 
+
+        assertEquals(1, mensagemDeErro.getMensagens().size());
         MatcherAssert.assertThat(mensagemDeErro.getMensagens(), Matchers.containsInAnyOrder(
-                "O campo name não deve estar vazio"
-        ));
+                "O campo name não deve estar vazio"));
+
     }
 
     @DisplayName("não deve cadastrar uma categoria com mesmo nome")
     @Test
-    void teste04() throws Exception {
+    void teste06() throws Exception {
         Category category = new Category("Banho");
         categoryRepository.save(category);
 
@@ -128,40 +161,10 @@ class CategoryControllerTest {
         MensagemDeErro mensagemDeErro = mapper.readValue(payloadResponse, MensagemDeErro.class);
 
         assertEquals(1, mensagemDeErro.getMensagens().size());
-
         MatcherAssert.assertThat(mensagemDeErro.getMensagens(), Matchers.containsInAnyOrder(
                 "O campo name name is already registered"
         ));
     }
 
-    @DisplayName("não deve cadastrar uma categoria sem autenticacao")
-    @Test
-    void teste05() throws Exception {
 
-        NewCategoryRequest newCategoryRequest = new NewCategoryRequest("Banho", null);
-
-        String payload = mapper.writeValueAsString(newCategoryRequest);
-
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/categories")
-                .content(payload).contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br");
-
-        mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isUnauthorized());
-
-    }
-
-    @DisplayName("não deve cadastrar uma categoria sem autorizacao")
-    @Test
-    void teste06() throws Exception {
-
-        NewCategoryRequest newCategoryRequest = new NewCategoryRequest("Banho", null);
-
-        String payload = mapper.writeValueAsString(newCategoryRequest);
-
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/categories")
-                .with(jwt())
-                .content(payload).contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br");
-
-        mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isForbidden());
-
-    }
 }

@@ -102,7 +102,7 @@ class PurchaseControllerTest {
         String payload = mapper.writeValueAsString(newPurchaseRequest);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/purchase")
-                .content(payload).contentType(MediaType.APPLICATION_JSON)
+                .content(payload).contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br")
                 .with(jwt().jwt(jwt -> {
                     jwt.claim("email", user.getUsername());
                 }).authorities(new SimpleGrantedAuthority("SCOPE_purchase:write")));
@@ -128,7 +128,7 @@ class PurchaseControllerTest {
         String payload = mapper.writeValueAsString(newPurchaseRequest);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/purchase")
-                .content(payload).contentType(MediaType.APPLICATION_JSON)
+                .content(payload).contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br")
                 .with(jwt().jwt(jwt -> {
                     jwt.claim("email", user.getUsername());
                 }).authorities(new SimpleGrantedAuthority("SCOPE_purchase:write")));
@@ -153,7 +153,7 @@ class PurchaseControllerTest {
         String payload = mapper.writeValueAsString(newPurchaseRequest);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/purchase")
-                .content(payload).contentType(MediaType.APPLICATION_JSON);
+                .content(payload).contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br");
 
 
         mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isUnauthorized());
@@ -168,7 +168,7 @@ class PurchaseControllerTest {
         String payload = mapper.writeValueAsString(newPurchaseRequest);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/purchase")
-                .content(payload).contentType(MediaType.APPLICATION_JSON)
+                .content(payload).contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br")
                 .with(jwt());
 
 
@@ -184,7 +184,7 @@ class PurchaseControllerTest {
         String payload = mapper.writeValueAsString(newPurchaseRequest);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/purchase")
-                .content(payload).contentType(MediaType.APPLICATION_JSON)
+                .content(payload).contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br")
                 .with(jwt().jwt(jwt -> {
                     jwt.claim("email", user.getUsername());
                 }).authorities(new SimpleGrantedAuthority("SCOPE_purchase:write")));
@@ -197,7 +197,7 @@ class PurchaseControllerTest {
         assertEquals(1, mensagemDeErro.getMensagens().size());
         MatcherAssert.assertThat(mensagemDeErro.getMensagens(), Matchers.containsInAnyOrder(
 
-                "O campo quantity must be greater than or equal to 1"
+                "O campo quantity deve ser maior que ou igual à 1"
 
         ));
 
@@ -214,7 +214,7 @@ class PurchaseControllerTest {
         String payload = mapper.writeValueAsString(newPurchaseRequest);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/purchase")
-                .content(payload).contentType(MediaType.APPLICATION_JSON)
+                .content(payload).contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br")
                 .with(jwt().jwt(jwt -> {
                     jwt.claim("email", user.getUsername());
                 }).authorities(new SimpleGrantedAuthority("SCOPE_purchase:write")));

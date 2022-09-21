@@ -117,7 +117,7 @@ class QuestionControllerTest {
                     jwt.claim("email", user.getUsername());
                 }).authorities(new SimpleGrantedAuthority("SCOPE_products:write")))
                 .content(payload)
-                .contentType(MediaType.APPLICATION_JSON);
+                .contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br");
 
         mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.redirectedUrlPattern("/api/products/*/questions/*"));
@@ -138,7 +138,7 @@ class QuestionControllerTest {
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(
                         "/api/products/{id}/questions", product.getId().toString())
-                .contentType(MediaType.APPLICATION_JSON).content(payload);
+                .contentType(MediaType.APPLICATION_JSON).content(payload).header("Accept-Language", "pt-br");
 
         mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isUnauthorized());
 
@@ -156,7 +156,7 @@ class QuestionControllerTest {
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(
                         "/api/products/{id}/questions", product.getId().toString())
                 .with(jwt())
-                .contentType(MediaType.APPLICATION_JSON).content(payload);
+                .contentType(MediaType.APPLICATION_JSON).content(payload).header("Accept-Language", "pt-br");
 
         mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isForbidden());
 
@@ -178,7 +178,7 @@ class QuestionControllerTest {
                     jwt.claim("email", user.getUsername());
                 }).authorities(new SimpleGrantedAuthority("SCOPE_products:write")))
                 .content(payload)
-                .contentType(MediaType.APPLICATION_JSON);
+                .contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br");
 
         String contentAsString = mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
@@ -187,7 +187,7 @@ class QuestionControllerTest {
 
         assertEquals(1, mensagemDeErro.getMensagens().size());
         MatcherAssert.assertThat(mensagemDeErro.getMensagens(), Matchers.containsInAnyOrder(
-                "O campo title must not be blank"
+                "O campo title não deve estar em branco"
         ));
 
 
@@ -207,7 +207,7 @@ class QuestionControllerTest {
                     jwt.claim("email", user.getUsername());
                 }).authorities(new SimpleGrantedAuthority("SCOPE_products:write")))
                 .content(payload)
-                .contentType(MediaType.APPLICATION_JSON);
+                .contentType(MediaType.APPLICATION_JSON).header("Accept-Language", "pt-br");
 
         mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isNotFound());
 

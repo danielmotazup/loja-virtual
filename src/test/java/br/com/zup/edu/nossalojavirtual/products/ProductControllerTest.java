@@ -28,6 +28,7 @@ import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -179,7 +180,8 @@ class ProductControllerTest {
                 .with(jwt().jwt(jwt -> {
                     jwt.claim("email", user.getUsername());
                 }).authorities(new SimpleGrantedAuthority("SCOPE_products:write")))
-                .content(payload).contentType(MediaType.APPLICATION_JSON);
+                .content(payload).contentType(MediaType.APPLICATION_JSON)
+                .header("Accept-Language", "pt-br");
 
         String response = mockMvc.perform(request)
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
@@ -191,10 +193,10 @@ class ProductControllerTest {
 
         assertEquals(4, mensagemDeErro.getMensagens().size());
         MatcherAssert.assertThat(mensagemDeErro.getMensagens(), Matchers.containsInAnyOrder(
-                "O campo characteristics size must be between 3 and 2147483647",
-                "O campo description length must be between 0 and 1000",
-                "O campo price must be greater than or equal to 0.01",
-                "O campo name must not be blank"));
+                "O campo description o comprimento deve ser entre 0 e 1000",
+                "O campo characteristics tamanho deve ser entre 3 e 2147483647",
+                "O campo price deve ser maior que ou igual a 0.01",
+                "O campo name não deve estar em branco"));
     }
 
     @DisplayName("não deve cadastrar um produto sem categoria")
@@ -210,7 +212,8 @@ class ProductControllerTest {
                 .with(jwt().jwt(jwt -> {
                     jwt.claim("email", user.getUsername());
                 }).authorities(new SimpleGrantedAuthority("SCOPE_products:write")))
-                .content(payload).contentType(MediaType.APPLICATION_JSON);
+                .content(payload).contentType(MediaType.APPLICATION_JSON)
+                .header("Accept-Language", "pt-br");
 
         String contentAsString = mockMvc.perform(request)
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
@@ -228,36 +231,6 @@ class ProductControllerTest {
     }
 
 
-    @DisplayName("deve cadastrar foto a produto que pertence ao proprio usuário")
-    @Test
-    void teste06() throws Exception {
-
-        NewProductRequest newProductRequest = new NewProductRequest("Toalha", new BigDecimal("15.00"), 5, photos,
-                characteristicList, "toalha macia", category.getId());
-
-
-        String payload = mapper.writeValueAsString(newProductRequest);
-
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/api/products")
-                .with(jwt().jwt(jwt -> {
-                    jwt.claim("email", user.getUsername());
-                }).authorities(new SimpleGrantedAuthority("SCOPE_products:write")))
-
-                .content(payload)
-                .contentType(MediaType.APPLICATION_JSON)
-                .header("Accept-Language", "pt-br");
-
-
-        mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.redirectedUrlPattern("/api/products/*"));
-
-        List<Product> products = productRepository.findAll();
-
-
-        assertEquals(user.getUsername(), products.get(0).getUser().getUsername());
-
-
-    }
 
 
 

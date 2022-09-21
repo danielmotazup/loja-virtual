@@ -2,6 +2,7 @@ package br.com.zup.edu.nossalojavirtual.users;
 
 import org.springframework.data.repository.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends Repository<User, Long> {
@@ -15,4 +16,6 @@ public interface UserRepository extends Repository<User, Long> {
     Optional<User> findById(Long id);
 
     void deleteAll();
+
+    List<User> findAll();
 }
